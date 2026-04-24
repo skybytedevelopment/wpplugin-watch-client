@@ -1,0 +1,552 @@
+/* WPPlugin Watch — admin styles
+ *
+ * Covers: page layout, header, stats bar, scan card, vuln rows,
+ * commentary panel, version notice banners, badges, and footer.
+ * No external dependencies. Targets wp-admin context only.
+ *
+ * Version notice display rules (ADR section 7):
+ *   .wpw-version-notice-security -- red, non-dismissible
+ *   .wpw-version-notice-standard -- yellow, dismissible (close TBD)
+ */
+
+.wpw-wrap {
+    max-width: 860px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1d2327;
+}
+
+/* ── Header ── */
+.wpw-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 16px 0 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.wpw-logo {
+    width: 40px;
+    height: 40px;
+    background: #d63638;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.wpw-logo .dashicons {
+    color: #fff;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+.wpw-header-text {
+    flex: 1;
+}
+
+.wpw-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin: 0 0 2px !important;
+    padding: 0 !important;
+    line-height: 1.3 !important;
+    border: none !important;
+    color: #1d2327 !important;
+}
+
+.wpw-version {
+    font-size: 11px;
+    font-weight: 400;
+    color: #8c8f94;
+    margin-left: 6px;
+}
+
+.wpw-subtitle {
+    font-size: 12px;
+    color: #8c8f94;
+    margin: 0;
+}
+
+.wpw-last-scan {
+    font-size: 12px;
+    color: #8c8f94;
+    white-space: nowrap;
+}
+
+/* ── Stats row ── */
+.wpw-stats-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: stretch;
+}
+
+.wpw-stat-group {
+    display: flex;
+    gap: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.wpw-stat-group-label {
+    font-size: 10px;
+    color: #8c8f94;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 14px 0;
+    background: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+    grid-column: 1 / -1;
+}
+
+.wpw-stat-group-scanned {
+    flex: 1;
+}
+
+.wpw-stat-group-found {
+    flex: 1;
+}
+
+.wpw-stat-group-scanned .wpw-stat-group-label {
+    background: #f9f9f9;
+}
+
+.wpw-stat-group-found .wpw-stat-group-label {
+    background: #fef9f0;
+    border-color: #f0d9a0;
+}
+
+.wpw-stat-group-found {
+    border-color: #e8c840;
+}
+
+.wpw-stat-group-inner {
+    display: flex;
+}
+
+.wpw-stat {
+    background: #fff;
+    padding: 10px 16px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.wpw-stat-group-found .wpw-stat {
+    background: #fffdf5;
+}
+
+.wpw-stat + .wpw-stat {
+    border-left: 1px solid #e0e0e0;
+}
+
+.wpw-stat-group-found .wpw-stat + .wpw-stat {
+    border-left-color: #f0e0a0;
+}
+
+.wpw-stat-num {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    color: #1d2327;
+}
+
+.wpw-num-danger { color: #d63638; }
+.wpw-num-warn   { color: #996800; }
+.wpw-num-ok     { color: #00a32a; }
+
+.wpw-stat-label {
+    font-size: 11px;
+    color: #8c8f94;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ── Cards ── */
+.wpw-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+
+.wpw-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f9f9f9;
+}
+
+.wpw-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.wpw-card-body {
+    padding: 14px 16px;
+}
+
+/* ── Token row ── */
+.wpw-token-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.wpw-token {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    background: #f0f0f1;
+    color: #50575e;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #dcdcde;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+/* ── Scan button ── */
+.wpw-btn-scan {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #d63638;
+    color: #fff !important;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.wpw-btn-scan:hover { background: #b32d2e; }
+.wpw-btn-scan:active { opacity: 0.85; }
+.wpw-btn-scan:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.wpw-btn-scan .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+}
+
+.wpw-btn-scan.wpw-scanning .dashicons {
+    animation: wpw-spin 1s linear infinite;
+}
+
+@keyframes wpw-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.wpw-scan-status {
+    font-size: 12px;
+    color: #8c8f94;
+}
+
+/* ── Badges ── */
+.wpw-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.wpw-badge-clean    { background: #edfaef; color: #007017; }
+.wpw-badge-issues   { background: #fcf0f1; color: #8a1f1f; }
+
+/* ── Vuln rows ── */
+.wpw-vuln-row {
+    padding: 11px 16px;
+    border-bottom: 1px solid #f0f0f1;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.wpw-vuln-row:last-child { border-bottom: none; }
+.wpw-vuln-row:hover      { background: #f9f9f9; }
+.wpw-vuln-row.is-open    { background: #f9f9f9; }
+
+.wpw-vuln-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.wpw-vuln-slug {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+    flex: 1;
+}
+
+.wpw-sev {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.wpw-sev-critical { background: #fcf0f1; color: #8a1f1f; border: 1px solid #f5b8b8; }
+.wpw-sev-high     { background: #fff3ec; color: #8a3a00; border: 1px solid #f5c9a0; }
+.wpw-sev-medium   { background: #fffbe6; color: #7a6000; border: 1px solid #f0d960; }
+.wpw-sev-low      { background: #e8f0fb; color: #1d4289; border: 1px solid #a8c4f0; }
+
+.wpw-chevron {
+    font-size: 10px;
+    color: #8c8f94;
+    transition: transform 0.15s;
+    display: inline-block;
+    line-height: 1;
+}
+
+.wpw-vuln-row.is-open .wpw-chevron {
+    transform: rotate(90deg);
+}
+
+.wpw-vuln-subtitle {
+    font-size: 12px;
+    color: #646970;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* ── Vuln detail panel ── */
+.wpw-vuln-detail {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.wpw-vuln-row.is-open .wpw-vuln-detail {
+    display: block;
+}
+
+.wpw-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.wpw-detail-cell {
+    background: #f6f7f7;
+    border-radius: 5px;
+    padding: 9px 11px;
+}
+
+.wpw-detail-cell-label {
+    font-size: 10px;
+    color: #8c8f94;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 3px;
+}
+
+.wpw-detail-cell-val {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1d2327;
+    line-height: 1.3;
+}
+
+.wpw-cvss-bar {
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.wpw-cvss-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.wpw-patch-yes  { color: #007017; font-size: 12px; }
+.wpw-patch-no   { color: #d63638; font-size: 12px; }
+
+/* ── Clean / empty states ── */
+.wpw-clean {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #007017;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wpw-clean::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00a32a;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Version notice banner ── */
+.wpw-version-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    border: 1px solid;
+}
+
+.wpw-version-notice-standard {
+    background: #fff8e5;
+    border-color: #dba617;
+    color: #7a5c00;
+}
+
+.wpw-version-notice-security {
+    background: #fcf0f1;
+    border-color: #d63638;
+    color: #8a1f1f;
+}
+
+.wpw-version-notice .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.wpw-version-notice-body {
+    flex: 1;
+}
+
+.wpw-version-notice-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 3px;
+}
+
+.wpw-version-notice-message {
+    font-size: 12px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.wpw-version-notice-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: inherit;
+}
+
+/* ── Commentary panel ── */
+.wpw-disclosure {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px 12px;
+    font-size: 12px;
+    color: #8c8f94;
+    border-top: 1px solid #f0f0f1;
+}
+
+.wpw-disclosure .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: #00a32a;
+}
+
+/* ── Commentary panel ── */
+.wpw-commentary {
+    border-left-width: 4px;
+    border-radius: 0 8px 8px 0;
+}
+
+.wpw-commentary-clean   { border-left-color: #00a32a; }
+.wpw-commentary-warning { border-left-color: #dba617; }
+.wpw-commentary-critical { border-left-color: #d63638; }
+
+.wpw-commentary-body {
+    padding: 14px 16px;
+}
+
+.wpw-commentary-summary {
+    font-size: 13px;
+    color: #1d2327;
+    margin: 0 0 10px;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.wpw-action-list {
+    margin: 0;
+    padding: 0 0 0 18px;
+    list-style: disc;
+}
+
+.wpw-action-list li {
+    font-size: 13px;
+    color: #3c434a;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    padding-left: 4px;
+}
+
+.wpw-action-list li:last-child { margin-bottom: 0; }
+
+#wpw-core-list .wpw-vuln-slug {
+    display: none;
+}
+
+#wpw-core-list .wpw-vuln-subtitle {
+    display: none;
+}
+
+#wpw-core-list .wpw-vuln-main-title {
+    font-size: 13px;
+    color: #1d2327;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* ── Footer ── */
+.wpw-footer {
+    font-size: 11px;
+    color: #8c8f94;
+    text-align: center;
+    margin-top: 4px;
+}
