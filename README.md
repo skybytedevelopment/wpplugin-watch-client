@@ -56,7 +56,7 @@ The goal is simple: make security visibility accessible without requiring securi
 ## Building from Source
 
 ```bash
-git clone https://github.com/skybytedev/wppluginwatch.git
+git clone https://github.com/skybytedevelopment/wppluginwatch-client.git
 cd wppluginwatch
 ./build.sh
 ```
