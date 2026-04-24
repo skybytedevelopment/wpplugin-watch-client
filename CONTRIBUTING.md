@@ -8,6 +8,13 @@ Thank you for your interest in contributing.
 - WordPress 6.0+ (local install for testing)
 - No build tools required — the plugin is plain PHP, JS, and CSS
 
+## Development Setup
+
+1. Clone your fork
+2. Place the plugin in your local WordPress `/wp-content/plugins/` directory
+3. Activate the plugin in WordPress
+4. Make changes and test locally
+
 ## Building
 
 ```bash
@@ -37,8 +44,16 @@ This plugin follows [WordPress Coding Standards](https://developer.wordpress.org
 ## Pull Requests
 
 1. Fork the repo and create a branch from `main`.
+   - Use a descriptive branch name: `feature/...`, `fix/...`, or `chore/...`
 2. Make your changes following the coding standards above.
 3. Test against a local WordPress install.
 4. Open a pull request with a clear description of what changed and why.
+
+Include in your PR:
+- What changed
+- Why it was needed
+- Any testing performed
+
+Pull requests that do not follow coding standards or are not tested locally may be closed.
 
 Please keep pull requests focused — one concern per PR.
