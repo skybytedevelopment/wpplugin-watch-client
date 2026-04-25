@@ -3,7 +3,7 @@
  * Plugin Name: WPPlugin Watch
  * Plugin URI:  https://wpplugin.watch
  * Description: Continuous vulnerability monitoring for WordPress plugins and themes.
- * Version:     1.0.4
+ * Version:     1.1.0
  * Author:      Skybyte Development
  * Author URI:  https://skybyte.dev
  * License:     GPL-2.0-or-later
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin version. Must match the Version header above.
  * Injected by build.sh on each release alongside WPW_VERSION_HASH.
  */
-define( 'WPW_VERSION',      '1.0.4' );
+define( 'WPW_VERSION',      '1.1.0' );
 
 /**
  * SHA-256 hash of the plugin codebase, computed by build.sh at release time.
