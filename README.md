@@ -1,33 +1,48 @@
 # WPPlugin Watch
 
-![License: GPL-2.0-or-later](https://img.shields.io/badge/License-GPL--2.0--or--later-blue.svg)
+![WPPlugin Watch](./assets/github-banner.png)
 
-Continuous vulnerability monitoring for WordPress plugins, themes, and core — with plain-language results designed for real-world site owners.
+![License: GPL-2.0-or-later](https://img.shields.io/badge/License-GPL--2.0--or--later-blue.svg)
+![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-blue)
+![PHP](https://img.shields.io/badge/PHP-8.0%2B-777bb4)
+
+Continuous vulnerability monitoring for WordPress plugins, themes, and core. Clear results, direct risk signals, and actionable updates.
 
 ## Overview
 
 WPPlugin Watch scans your WordPress installation against the Wordfence Intelligence vulnerability feed and highlights known vulnerabilities with clear severity ratings and actionable guidance.
 
-The goal is simple: make security visibility accessible without requiring security expertise.
+Designed for real-world site owners who need clarity, not security jargon.
+
+## What You’ll See
+
+- Real-time vulnerability counts  
+- Clear severity signals (Critical / High / Medium / Low)  
+- Direct identification of affected plugins, themes, or core  
+- Immediate guidance on what to update and why  
 
 ## Features
 
 - Detects known vulnerabilities (CVEs) in plugins, themes, and WordPress core  
-- Severity grading: Critical, High, Medium, Low  
+- Clear severity classification: Critical, High, Medium, Low  
 - Plain-language explanations for each finding  
-- Version update alerts for security-related releases  
-- Daily background checks for new vulnerabilities  
+- Identifies exactly what needs to be updated  
+- Daily background checks for newly disclosed vulnerabilities  
 - Privacy-first design — no personally identifiable information collected  
+
+## Interface
+
+![Dashboard overview](./assets/dashboard.png)
 
 ## Architecture
 
 - WordPress plugin collects local inventory (plugins, themes, core version)  
-- A one-way SHA-256 fingerprint identifies the site (domain + site URL + `AUTH_SALT`)  
-- Inventory is sent to the WPPlugin Watch backend (`api.wpplugin.watch`)  
+- A one-way SHA-256 fingerprint identifies the site  
+- Inventory is sent to the backend (`api.wpplugin.watch`)  
 - Backend matches against the Wordfence Intelligence vulnerability database  
-- Results returned with severity grading and explanations  
+- Results returned with severity and explanations  
 
-## Privacy Model
+## Privacy
 
 - No usernames, emails, or content are transmitted  
 - Site identity is represented only as a non-reversible SHA-256 fingerprint  
@@ -40,10 +55,25 @@ The goal is simple: make security visibility accessible without requiring securi
 
 ## Installation
 
-1. Download the latest zip from the [Releases](../../releases) page  
-2. In WordPress admin, go to **Plugins → Add New → Upload Plugin**  
-3. Upload and activate  
-4. Navigate to **WPPlugin Watch** and run your first scan  
+### Build and install locally
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/skybytedevelopment/wpplugin-watch-client.git
+   cd wpplugin-watch-client
+   ```
+
+2. Build the plugin zip:
+   ```bash
+   ./build.sh
+   ```
+   The script outputs a versioned zip to the `dist/` directory.
+
+3. In WordPress admin, go to **Plugins → Add New → Upload Plugin**
+4. Upload the zip from `dist/` and activate
+5. Navigate to **WPPlugin Watch** and run your first scan
+
+> Note: A prebuilt release zip is not yet published. Installation currently requires building from source. This will be updated once the plugin is available in the WordPress Plugin Directory.
 
 ## How It Works
 
@@ -56,7 +86,7 @@ The goal is simple: make security visibility accessible without requiring securi
 ## Building from Source
 
 ```bash
-git clone https://github.com/skybytedevelopment/wpplugin-watch-client.git.
+git clone https://github.com/skybytedevelopment/wpplugin-watch-client.git
 cd wpplugin-watch-client
 ./build.sh
 ```
