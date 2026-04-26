@@ -27,6 +27,13 @@ class WPW_Settings {
      * @return void
      */
     public static function init() {
+        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
+    }
+
+    /**
+     * Register settings and fields at the correct admin lifecycle hook.
+     */
+    public static function register_settings() {
         // Register the setting (stored in options table)
         register_setting( 'general', 'wpw_enable_scanning', [
             'type' => 'boolean',

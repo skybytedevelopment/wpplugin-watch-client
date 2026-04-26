@@ -129,7 +129,15 @@ add_action( 'admin_init', function () {
  */
 add_filter( 'pre_http_request', function ( $pre, $args, $url ) {
     if ( strpos( $url, WPW_API_BASE ) === 0 && ! wpw_is_enabled() ) {
-        return new WP_Error( 'wpw_scanning_disabled', 'WPPlugin Watch scanning is disabled until enabled by an administrator.' );
+        return new WP_Error( 'wpw_scanning_disabled', 'WPPlugin Watch scanning is disabled. Enable it in Settings → General → WPPlugin Watch Scanning to run scans.');
     }
     return $pre;
 }, 10, 3 );
+
+add_action( 'admin_notices', function () {
+    if ( ! get_option( 'wpw_enable_scanning', false ) ) {
+        echo '<div class="notice notice-warning is-dismissible">';
+        echo '<p><strong>WPPlugin Watch:</strong> Enable vulnerability scanning in <a href="' . admin_url('options-general.php') . '">Settings → General</a> to begin.</p>';
+        echo '</div>';
+    }
+});
