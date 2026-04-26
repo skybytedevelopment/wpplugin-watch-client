@@ -127,6 +127,11 @@ class WPW_Admin {
         if ( ! current_user_can( 'manage_options' ) ) {
             return;
         }
+        if ( ! get_option( 'wpw_enable_scanning', false ) ) {
+            echo '<div class="notice notice-warning">';
+            echo '<p><strong>WPPlugin Watch:</strong> Scanning is disabled. Enable it in <a href="' . admin_url('options-general.php') . '">Settings → General</a>.</p>';
+            echo '</div>';
+        }
 
         $last_scan = get_option( 'wpw_last_scan', null );
         $last_scan_label = $last_scan

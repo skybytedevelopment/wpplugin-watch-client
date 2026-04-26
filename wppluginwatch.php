@@ -3,7 +3,7 @@
  * Plugin Name: WPPlugin Watch
  * Plugin URI:  https://wpplugin.watch
  * Description: Continuous vulnerability monitoring for WordPress plugins and themes.
- * Version:     1.1.0
+ * Version:     1.2.0
  * Author:      Skybyte Development
  * Author URI:  https://skybyte.dev
  * License:     GPL-2.0-or-later
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin version. Must match the Version header above.
  * Injected by build.sh on each release alongside WPW_VERSION_HASH.
  */
-define( 'WPW_VERSION',      '1.1.0' );
+define( 'WPW_VERSION',      '1.2.0' );
 
 /**
  * SHA-256 hash of the plugin codebase, computed by build.sh at release time.
@@ -79,8 +79,65 @@ WPW_Lifecycle::register( __FILE__ );
 register_activation_hook( __FILE__, array( 'WPW_Updater', 'schedule' ) );
 register_deactivation_hook( __FILE__, array( 'WPW_Updater', 'unschedule' ) );
 
+
 add_action( 'plugins_loaded', function () {
     WPW_Settings::init();
     WPW_Admin::init();
     WPW_Updater::init();
 } );
+
+// -----------------------------------------------------------------------------
+// Compliance: Consent, Privacy, and API Gating
+// -----------------------------------------------------------------------------
+
+/**
+ * Returns whether scanning (external API calls) is enabled by the admin.
+ */
+function wpw_is_enabled() {
+    return (bool) get_option( 'wpw_enable_scanning', false );
+}
+
+/**
+ * Register setting for enabling scanning (admin-controlled consent).
+ */
+add_action( 'admin_init', function () {
+    register_setting( 'general', 'wpw_enable_scanning', [
+        'type' => 'boolean',
+        'sanitize_callback' => function ( $value ) {
+            return (bool) $value;
+        },
+        'default' => false,
+    ] );
+} );
+
+/**
+ * Add privacy policy content.
+ */
+add_action( 'admin_init', function () {
+    if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+        wp_add_privacy_policy_content(
+            'WPPlugin Watch',
+            wp_kses_post(
+                'WPPlugin Watch sends installed plugin and theme version data, along with WordPress core version, to the WPPlugin Watch API (https://api.wpplugin.watch) to perform vulnerability analysis. No personal user data or site content is transmitted. An anonymous site fingerprint may be included for operational purposes.'
+            )
+        );
+    }
+} );
+
+/**
+ * Block external API calls unless the admin has enabled scanning.
+ */
+add_filter( 'pre_http_request', function ( $pre, $args, $url ) {
+    if ( strpos( $url, WPW_API_BASE ) === 0 && ! wpw_is_enabled() ) {
+        return new WP_Error( 'wpw_scanning_disabled', 'WPPlugin Watch scanning is disabled. Enable it in Settings → General → WPPlugin Watch Scanning to run scans.');
+    }
+    return $pre;
+}, 10, 3 );
+
+add_action( 'admin_notices', function () {
+    if ( ! get_option( 'wpw_enable_scanning', false ) ) {
+        echo '<div class="notice notice-warning is-dismissible">';
+        echo '<p><strong>WPPlugin Watch:</strong> Enable vulnerability scanning in <a href="' . admin_url('options-general.php') . '">Settings → General</a> to begin.</p>';
+        echo '</div>';
+    }
+});

@@ -14,6 +14,19 @@ WPPlugin Watch scans your WordPress installation against the Wordfence Intellige
 
 Designed for real-world site owners who need clarity, not security jargon.
 
+## Important: Enable Scanning
+
+After activating the plugin, vulnerability scanning is **disabled by default**.
+
+To enable scanning:
+
+1. Go to **Settings → General**
+2. Find **WPPlugin Watch Scanning**
+3. Check **Enable vulnerability scanning**
+4. Click **Save Changes**
+
+Scanning will not run until this setting is enabled.
+
 ## What You’ll See
 
 - Real-time vulnerability counts  
@@ -71,7 +84,8 @@ Designed for real-world site owners who need clarity, not security jargon.
 
 3. In WordPress admin, go to **Plugins → Add New → Upload Plugin**
 4. Upload the zip from `dist/` and activate
-5. Navigate to **WPPlugin Watch** and run your first scan
+5. Enable scanning in **Settings → General**
+6. Navigate to **WPPlugin Watch** and run your first scan
 
 > Note: A prebuilt release zip is not yet published. Installation currently requires building from source. This will be updated once the plugin is available in the WordPress Plugin Directory.
 

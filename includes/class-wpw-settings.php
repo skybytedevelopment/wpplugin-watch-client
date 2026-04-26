@@ -27,7 +27,29 @@ class WPW_Settings {
      * @return void
      */
     public static function init() {
-        // Reserved for future settings registration.
+        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
+    }
+
+    /**
+     * Register settings and fields at the correct admin lifecycle hook.
+     */
+    public static function register_settings() {
+        // Register the setting (stored in options table)
+        register_setting( 'general', 'wpw_enable_scanning', [
+            'type' => 'boolean',
+            'sanitize_callback' => function ( $value ) {
+                return (bool) $value;
+            },
+            'default' => false,
+        ] );
+
+        // Add a checkbox field to Settings → General
+        add_settings_field(
+            'wpw_enable_scanning',
+            'WPPlugin Watch Scanning',
+            [ __CLASS__, 'render_enable_scanning_field' ],
+            'general'
+        );
     }
 
     /**
@@ -68,5 +90,20 @@ class WPW_Settings {
         $fp = hash( 'sha256', $domain . $site_url . $salt );
         update_option( 'wpw_site_fingerprint', $fp );
         return $fp;
+    }
+    /**
+     * Render the enable scanning checkbox field.
+     */
+    public static function render_enable_scanning_field() {
+        $enabled = (bool) get_option( 'wpw_enable_scanning', false );
+        ?>
+        <label for="wpw_enable_scanning">
+            <input type="checkbox" id="wpw_enable_scanning" name="wpw_enable_scanning" value="1" <?php checked( $enabled ); ?> />
+            Enable vulnerability scanning (sends plugin, theme, and WordPress version data to WPPlugin Watch API)
+        </label>
+        <p class="description">
+            This feature sends installed software version data to an external service to check for known vulnerabilities. No personal data is transmitted.
+        </p>
+        <?php
     }
 }
